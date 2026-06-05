@@ -4,9 +4,8 @@ import './App.css';
 import ToDoForm from "./AddTask";
 import ToDo from "./Task";
 import axios from 'axios';
-import Weather from './Weather'; 
-
-const weatherApiKey = 'c7616da4b68205c2f3ae73df2c31d177'; // Этот ключ больше не нужен, его можно удалить
+import Weather from './Weather';
+import RandomAnimal from './RandomAnimal'; // <--- 1. импорт генератора животных
 
 function App() {
   const [rates, setRates] = useState({});
@@ -14,6 +13,7 @@ function App() {
   const [error, setError] = useState('');
   const [todos, setTodos] = useState([]);
 
+  // Загрузка курсов валют
   useEffect(() => {
     async function fetchAllData() {
       try {
@@ -21,7 +21,6 @@ function App() {
         const USDrate = currencyResponse.data.Valute.USD.Value.toFixed(4).replace('.', ',');
         const EURrate = currencyResponse.data.Valute.EUR.Value.toFixed(4).replace('.', ',');
         setRates({ USDrate, EURrate });
-        // Логика получения погоды отсюда удалена
       } catch (err) {
         setError('Ошибка загрузки данных.');
       } finally {
@@ -31,7 +30,25 @@ function App() {
     fetchAllData();
   }, []);
 
-  // ... все функции addTask, removeTask, handleToggle остаются без изменений ...
+  // Функции для работы со списком задач
+  const addTask = (userInput) => {
+    const newItem = {
+      id: Math.random().toString(36).substr(2, 9),
+      task: userInput,
+      complete: false
+    };
+    setTodos([...todos, newItem]);
+  };
+
+  const removeTask = (id) => {
+    setTodos([...todos.filter((todo) => todo.id !== id)]);
+  };
+
+  const handleToggle = (id) => {
+    setTodos([...todos.map((task) =>
+      task.id === id ? { ...task, complete: !task.complete } : { ...task }
+    )]);
+  };
 
   return (
     <div className="App">
@@ -43,8 +60,8 @@ function App() {
             <div>Доллар США $ — {rates.USDrate} руб.</div>
             <div>Евро € — {rates.EURrate} руб.</div>
           </div>
-          {/* 2. Вместо старой логики погоды используем новый компонент */}
           <Weather />
+          <RandomAnimal type="dog" /> {/* <--- 2. добавляем генератор животных (можно "cat") */}
         </div>
       )}
       <header>
