@@ -143,7 +143,7 @@ const App = () => {
       <div style={{ position: 'absolute', bottom: 20, left: 20, color: 'white', backgroundColor: 'rgba(0,0,0,0.6)', padding: '8px 16px', borderRadius: 8, fontFamily: 'sans-serif', zIndex: 10 }}>
         🎨 Случайные геометрические анимации
       </div>
-    </div>
+    </div> 
   );
 };
 
