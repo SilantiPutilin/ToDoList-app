@@ -9,19 +9,17 @@ const Anim = () => {
     let animationId;
     let shapes = [];
 
-    // Настройки области анимации
-    const AREA_HEIGHT = 180; // фиксированная высота в пикселях (можно поменять)
+    const AREA_HEIGHT = 180; // высота области анимации
 
-    // Вспомогательные функции
     const random = (min, max) => Math.random() * (max - min) + min;
 
-    // Класс геометрической фигуры
     class Shape {
       constructor(type, x, y, size, color, vx, vy, rotation = 0, rotationSpeed = 0) {
         this.type = type;
         this.x = x;
         this.y = y;
         this.size = size;
+        this.radius = size / 2; // половина размера (для круга, квадрата, треугольника примерно)
         this.color = color;
         this.vx = vx;
         this.vy = vy;
@@ -40,18 +38,18 @@ const Anim = () => {
         switch (this.type) {
           case 'circle':
             ctx.beginPath();
-            ctx.arc(0, 0, this.size / 2, 0, Math.PI * 2);
+            ctx.arc(0, 0, this.radius, 0, Math.PI * 2);
             ctx.fill();
             break;
           case 'rect':
-            ctx.fillRect(-this.size / 2, -this.size / 2, this.size, this.size);
+            ctx.fillRect(-this.radius, -this.radius, this.size, this.size);
             break;
           case 'triangle':
             ctx.beginPath();
             const height = this.size * Math.sqrt(3) / 2;
             ctx.moveTo(0, -height / 2);
-            ctx.lineTo(-this.size / 2, height / 2);
-            ctx.lineTo(this.size / 2, height / 2);
+            ctx.lineTo(-this.radius, height / 2);
+            ctx.lineTo(this.radius, height / 2);
             ctx.closePath();
             ctx.fill();
             break;
@@ -66,26 +64,34 @@ const Anim = () => {
         this.y += this.vy;
         this.rotation += this.rotationSpeed;
 
-        // Отскок от левой и правой границ
-        if (this.x < 0 || this.x > canvasWidth) {
+        // Отскок от левой и правой границ с учётом радиуса
+        if (this.x - this.radius < 0) {
+          this.x = this.radius;
           this.vx *= -1;
-          this.x = Math.min(Math.max(this.x, 0), canvasWidth);
+        } else if (this.x + this.radius > canvasWidth) {
+          this.x = canvasWidth - this.radius;
+          this.vx *= -1;
         }
-        // Отскок от верхней и нижней границ (только в пределах выделенной зоны)
-        if (this.y < 0 || this.y > canvasHeight) {
+
+        // Отскок от верхней и нижней границ с учётом радиуса
+        if (this.y - this.radius < 0) {
+          this.y = this.radius;
           this.vy *= -1;
-          this.y = Math.min(Math.max(this.y, 0), canvasHeight);
+        } else if (this.y + this.radius > canvasHeight) {
+          this.y = canvasHeight - this.radius;
+          this.vy *= -1;
         }
       }
     }
 
-    // Создаёт случайную фигуру в пределах заданной области
     const createRandomShape = (canvasWidth, canvasHeight) => {
       const types = ['circle', 'rect', 'triangle'];
       const type = types[Math.floor(Math.random() * types.length)];
       const size = random(25, 55);
-      const x = random(size, canvasWidth - size);
-      const y = random(size, canvasHeight - size);
+      const radius = size / 2;
+      // гарантируем, что центр фигуры находится на расстоянии не меньше радиуса от краёв
+      const x = random(radius, canvasWidth - radius);
+      const y = random(radius, canvasHeight - radius);
       const color = `hsl(${Math.random() * 360}, 70%, 65%)`;
       const vx = random(-1.5, 1.5);
       const vy = random(-1, 1);
@@ -93,7 +99,6 @@ const Anim = () => {
       return new Shape(type, x, y, size, color, vx, vy, 0, rotationSpeed);
     };
 
-    // Инициализация фигур (20 штук)
     const initShapes = (count, width, height) => {
       const newShapes = [];
       for (let i = 0; i < count; i++) {
@@ -102,14 +107,12 @@ const Anim = () => {
       return newShapes;
     };
 
-    // Настройка размеров canvas при изменении окна
     const handleResize = () => {
       canvas.width = window.innerWidth;
       canvas.height = AREA_HEIGHT;
       shapes = initShapes(25, canvas.width, canvas.height);
     };
 
-    // Анимационный цикл
     const animate = () => {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
       shapes.forEach(shape => {
@@ -135,9 +138,10 @@ const Anim = () => {
       bottom: 0,
       left: 0,
       width: '100%',
-      height: '180px',      // соответствует AREA_HEIGHT
-      pointerEvents: 'none', // чтобы клики проходили сквозь canvas
-      zIndex: 1
+      height: '180px',
+      pointerEvents: 'none',
+      zIndex: 1,
+      overflow: 'hidden' // чтобы ничего не вылезало за пределы блока
     }}>
       <canvas
         ref={canvasRef}
