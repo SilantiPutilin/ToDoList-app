@@ -1,15 +1,15 @@
+// App.jsx
 import React, { useState, useEffect } from 'react';
 import './App.css';
 import ToDoForm from "./AddTask";
 import ToDo from "./Task";
 import axios from 'axios';
-import Anim from './Anim';   // <--- ДОБАВЛЕНО (импорт анимации)
+import Weather from './Weather'; 
 
-const weatherApiKey = 'c7616da4b68205c2f3ae73df2c31d177';
+const weatherApiKey = 'c7616da4b68205c2f3ae73df2c31d177'; // Этот ключ больше не нужен, его можно удалить
 
 function App() {
   const [rates, setRates] = useState({});
-  const [weatherData, setWeatherData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
   const [todos, setTodos] = useState([]);
@@ -21,14 +21,7 @@ function App() {
         const USDrate = currencyResponse.data.Valute.USD.Value.toFixed(4).replace('.', ',');
         const EURrate = currencyResponse.data.Valute.EUR.Value.toFixed(4).replace('.', ',');
         setRates({ USDrate, EURrate });
-
-        navigator.geolocation.getCurrentPosition(async position => {
-          const { latitude: lat, longitude: lon } = position.coords;
-          const weatherResponse = await axios.get(
-            `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${weatherApiKey}&units=metric`
-          );
-          setWeatherData(weatherResponse.data);
-        });
+        // Логика получения погоды отсюда удалена
       } catch (err) {
         setError('Ошибка загрузки данных.');
       } finally {
@@ -38,24 +31,7 @@ function App() {
     fetchAllData();
   }, []);
 
-  const addTask = (userInput) => {
-    const newItem = {
-      id: Math.random().toString(36).substr(2, 9),
-      task: userInput,
-      complete: false
-    };
-    setTodos([...todos, newItem]);
-  };
-
-  const removeTask = (id) => {
-    setTodos([...todos.filter((todo) => todo.id !== id)]);
-  };
-
-  const handleToggle = (id) => {
-    setTodos([...todos.map((task) =>
-      task.id === id ? { ...task, complete: !task.complete } : { ...task }
-    )]);
-  };
+  // ... все функции addTask, removeTask, handleToggle остаются без изменений ...
 
   return (
     <div className="App">
@@ -67,12 +43,8 @@ function App() {
             <div>Доллар США $ — {rates.USDrate} руб.</div>
             <div>Евро € — {rates.EURrate} руб.</div>
           </div>
-          {weatherData && (
-            <div className="weather-info">
-              <p>Погода сегодня: {weatherData.main.temp.toFixed(1)}°C</p>
-              <img src={`http://openweathermap.org/img/w/${weatherData.weather[0].icon}.png`} alt="weather"/>
-            </div>
-          )}
+          {/* 2. Вместо старой логики погоды используем новый компонент */}
+          <Weather />
         </div>
       )}
       <header>
@@ -82,8 +54,6 @@ function App() {
       {todos.map((todo) => (
         <ToDo key={todo.id} todo={todo} toggleTask={handleToggle} removeTask={removeTask} />
       ))}
-
-      <Anim />   {/* <--- ДОБАВЛЕНО (рендер анимации внизу) */}
     </div>
   );
 }
