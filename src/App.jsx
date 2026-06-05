@@ -1,11 +1,8 @@
-// App.jsx
 import React, { useState, useEffect } from 'react';
 import './App.css';
 import ToDoForm from "./AddTask";
 import ToDo from "./Task";
 import axios from 'axios';
-import Weather from './Weather';
-import RandomAnimal from './RandomAnimal'; // <--- 1. импорт генератора животных
 
 function App() {
   const [rates, setRates] = useState({});
@@ -13,7 +10,6 @@ function App() {
   const [error, setError] = useState('');
   const [todos, setTodos] = useState([]);
 
-  // Загрузка курсов валют
   useEffect(() => {
     async function fetchAllData() {
       try {
@@ -30,7 +26,6 @@ function App() {
     fetchAllData();
   }, []);
 
-  // Функции для работы со списком задач
   const addTask = (userInput) => {
     const newItem = {
       id: Math.random().toString(36).substr(2, 9),
@@ -60,8 +55,6 @@ function App() {
             <div>Доллар США $ — {rates.USDrate} руб.</div>
             <div>Евро € — {rates.EURrate} руб.</div>
           </div>
-          <Weather />
-          <RandomAnimal type="dog" /> {/* <--- 2. добавляем генератор животных (можно "cat") */}
         </div>
       )}
       <header>
