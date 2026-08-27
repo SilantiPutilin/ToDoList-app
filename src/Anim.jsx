@@ -44,7 +44,7 @@ const Anim = () => {
           case 'rect':
             ctx.fillRect(-this.radius, -this.radius, this.size, this.size);
             break;
-          case 'triangle':
+          case 'triangle': {
             ctx.beginPath();
             const height = this.size * Math.sqrt(3) / 2;
             ctx.moveTo(0, -height / 2);
@@ -53,6 +53,7 @@ const Anim = () => {
             ctx.closePath();
             ctx.fill();
             break;
+          }
           default:
             break;
         }

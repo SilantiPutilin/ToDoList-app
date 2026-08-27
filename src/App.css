@@ -1,184 +1,229 @@
-.counter {
-  font-size: 16px;
-  padding: 5px 10px;
+/* Стили блока info */
+.info {
+  /* Используем гибкую разметку Flexbox для выравнивания элементов внутри контейнера */
+  display: flex;
+  /* Горизонтальное выравнивание содержимого по центру */
+  justify-content: center;
+  /* Высоту устанавливаем равной 100 пикселей */
+  height: 100px;
+  /* Выравнивание текущего элемента вертикально по центру родительского контейнера */
+  align-self: center;
+}
+
+/* Блок money */
+.money {
+  /* Цвет текста белый (#ffffff) */
+  color: #fff;
+  /* Обычная рамка вокруг элемента */
+  border: solid;
+  /* Скругляем углы рамки на 5 пикселей */
   border-radius: 5px;
-  color: var(--accent);
-  background: var(--accent-bg);
-  border: 2px solid transparent;
-  transition: border-color 0.3s;
-  margin-bottom: 24px;
-
-  &:hover {
-    border-color: var(--accent-border);
-  }
-  &:focus-visible {
-    outline: 2px solid var(--accent);
-    outline-offset: 2px;
-  }
+  /* Элемент занимает 80% высоты родителя */
+  height: 80%;
+  /* Плавающий элемент слева строки */
+  float: inline-start;
+  /* Внутренний отступ сверху 2%, справа 1%, снизу 0% */
+  padding: 2% 1% 0%;
 }
 
-.hero {
+/* Информация о погоде */
+.weather-info {
+  /* Белый цвет текста */
+  color: #fff;
+  /* Рамка обычного типа */
+  border: solid;
+  /* Скругленные уголки рамки */
+  border-radius: 5px;
+  /* Высота блока составляет 80% от размера родителя */
+  height: 80%;
+  /* Позиционируем элемент плавающим справа строки */
+  float: inline-end;
+  /* Внутреннее пространство внутри элемента: со всех сторон 1% */
+  padding: 1%;
+}
+
+/* Иконка погоды */
+.weather-info .weather-icon {
+  /* Размещаем иконку на одной строке */
+  display: inline-block;
+  /* Меняем тип курсора на 'руку' при наведении */
+  cursor: pointer;
+  /* Обтекаемый контент располагается справа */
+  float: right;
+  /* Размер шрифта устанавливается равным 22px */
+  font-size: 22px;
+  /* Позиция относительно текущего положения смещена влево на 4px и вверх на 5px */
   position: relative;
-
-  .base,
-  .framework,
-  .vite {
-    inset-inline: 0;
-    margin: 0 auto;
-  }
-
-  .base {
-    width: 170px;
-    position: relative;
-    z-index: 0;
-  }
-
-  .framework,
-  .vite {
-    position: absolute;
-  }
-
-  .framework {
-    z-index: 1;
-    top: 34px;
-    height: 28px;
-    transform: perspective(2000px) rotateZ(300deg) rotateX(44deg) rotateY(39deg)
-      scale(1.4);
-  }
-
-  .vite {
-    z-index: 0;
-    top: 107px;
-    height: 26px;
-    width: auto;
-    transform: perspective(2000px) rotateZ(300deg) rotateX(40deg) rotateY(39deg)
-      scale(0.8);
-  }
+  left: -4px;
+  bottom: 5px;
 }
 
-#center {
-  display: flex;
-  flex-direction: column;
-  gap: 25px;
-  place-content: center;
-  place-items: center;
-  flex-grow: 1;
-
-  @media (max-width: 1024px) {
-    padding: 32px 20px 24px;
-    gap: 18px;
-  }
+/* Заголовок списка */
+.list-header {
+  /* Цвет заголовка aliceblue (светло-голубой оттенок) */
+  color: aliceblue;
+  /* Размер шрифта заголовка 20px */
+  font-size: 20px;
+  /* Расстояние сверху равно 1% */
+  padding-top: 1%;
 }
 
-#next-steps {
-  display: flex;
-  border-top: 1px solid var(--border);
+/* Оформление элемента todo */
+.item-todo {
+  /* Отступы: со всех сторон 14px, по горизонтали автоцентрирование */
+  padding: 14px;
+  margin: 0 auto;
+  /* Текст выровнен по левому краю */
   text-align: left;
-
-  & > div {
-    flex: 1 1 0;
-    padding: 32px;
-    @media (max-width: 1024px) {
-      padding: 24px 20px;
-    }
-  }
-
-  .icon {
-    margin-bottom: 16px;
-    width: 22px;
-    height: 22px;
-  }
-
-  @media (max-width: 1024px) {
-    flex-direction: column;
-    text-align: center;
-  }
+  /* Верхний внешний отступ равен 15px */
+  margin-top: 15px;
+  /* Фон выполнен градиентом слева направо от фиолетового цвета к синему */
+  background: linear-gradient(
+    90deg,
+    rgba(93, 12, 255, 1) 0%,
+    #2ea4db 100%
+  );
+  /* Белые буквы */
+  color: #fff;
+  /* Без границы */
+  border: none;
+  /* Закруглённые края на 5 пикселей */
+  border-radius: 5px;
+  /* Курсор меняется на 'руку' при наведении мыши */
+  cursor: pointer;
+  /* Максимальная ширина элемента ограничена 60% ширины экрана */
+  max-width: 60%;
 }
 
-#docs {
-  border-right: 1px solid var(--border);
-
-  @media (max-width: 1024px) {
-    border-right: none;
-    border-bottom: 1px solid var(--border);
-  }
+/* Стиль текста в блоке item-todo */
+.item-todo .item-text {
+  /* Элемент размещается на одной строке */
+  display: inline-block;
+  /* Изменяется вид курсора при наведении */
+  cursor: pointer;
 }
 
-#next-steps ul {
-  list-style: none;
-  padding: 0;
-  display: flex;
-  gap: 8px;
-  margin: 32px 0 0;
-
-  .logo {
-    height: 18px;
-  }
-
-  a {
-    color: var(--text-h);
-    font-size: 16px;
-    border-radius: 6px;
-    background: var(--social-bg);
-    display: flex;
-    padding: 6px 12px;
-    align-items: center;
-    gap: 8px;
-    text-decoration: none;
-    transition: box-shadow 0.3s;
-
-    &:hover {
-      box-shadow: var(--shadow);
-    }
-    .button-icon {
-      height: 18px;
-      width: 18px;
-    }
-  }
-
-  @media (max-width: 1024px) {
-    margin-top: 20px;
-    flex-wrap: wrap;
-    justify-content: center;
-
-    li {
-      flex: 1 1 calc(50% - 8px);
-    }
-
-    a {
-      width: 100%;
-      justify-content: center;
-      box-sizing: border-box;
-    }
-  }
-}
-
-#spacer {
-  height: 88px;
-  border-top: 1px solid var(--border);
-  @media (max-width: 1024px) {
-    height: 48px;
-  }
-}
-
-.ticks {
+/* Иконка удаления */
+.item-todo .item-delete {
+  /* Расположены на одной строке */
+  display: inline-block;
+  /* Вид курсора меняется на 'руку' при наведении */
+  cursor: pointer;
+  /* Объект находится справа */
+  float: right;
+  /* Шрифт размером 22px */
+  font-size: 22px;
+  /* Позиция смещения относительно исходного места */
   position: relative;
-  width: 100%;
+  left: -4px;
+  bottom: 5px;
+}
 
-  &::before,
-  &::after {
-    content: '';
-    position: absolute;
-    top: -4.5px;
-    border: 5px solid transparent;
-  }
+/* Поле ввода */
+input {
+  /* Внутренние отступы поля ввода */
+  padding: 14px 32px 14px 16px;
+  /* Округлые углы формы */
+  border-radius: 4px 0 0 4px;
+  /* Толщина рамки 3px, цвет фиолетовый */
+  border: 3px solid #5d0cff;
+  /* Убираем выделение при фокусировке */
+  outline: none;
+  /* Белый фон */
+  background: white;
+}
 
-  &::before {
-    left: 0;
-    border-left-color: var(--border);
-  }
-  &::after {
-    right: 0;
-    border-right-color: var(--border);
-  }
+/* Кнопка */
+button {
+  /* Внутренние отступы кнопки */
+  padding: 16px 7px;
+  /* Нет границ */
+  border: none;
+  /* Углы скруглены */
+  border-radius: 0 4px 4px 0;
+  /* Курсор меняет форму на 'руку' при наведении */
+  cursor: pointer;
+  /* Удаляет подчеркивание и выделенный контур при клике */
+  outline: none;
+  /* Градиент фона от тёмно-фиолетового к светло-синему цвету */
+  background: linear-gradient(
+    90deg,
+    rgba(93, 12, 255, 1) 0%,
+    #2ea4db 100%
+  );
+  /* Белые буквы */
+  color: #fff;
+  /* Первая буква каждого слова пишется заглавной */
+  text-transform: capitalize;
+}
+
+/* Блок случайного занятия (Bored API) */
+.bored {
+  /* Белый текст на общем тёмном фоне */
+  color: #fff;
+  /* Рамка обычного типа со скруглением */
+  border: solid;
+  border-radius: 5px;
+  /* Внутренние отступы */
+  padding: 14px;
+  /* Центрируем блок и ограничиваем ширину, как у задач */
+  margin: 25px auto 0;
+  max-width: 60%;
+}
+
+/* Заголовок блока занятия */
+.bored-title {
+  font-size: 20px;
+  margin: 0 0 10px;
+  color: aliceblue;
+}
+
+/* Текст самого занятия */
+.bored-activity {
+  font-size: 18px;
+  margin: 0 0 8px;
+}
+
+/* Дополнительные сведения о занятии */
+.bored-meta {
+  font-size: 14px;
+  margin: 0 0 4px;
+  /* Слегка приглушаем вспомогательный текст */
+  opacity: 0.85;
+}
+
+/* Ссылка на описание занятия */
+.bored-link {
+  color: aliceblue;
+}
+
+/* Контейнер кнопок блока */
+.bored-buttons {
+  /* Раскладываем кнопки в ряд по центру с отступом */
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 12px;
+  /* Переносим кнопки на узких экранах */
+  flex-wrap: wrap;
+}
+
+/* Кнопки блока занятия: переопределяем углы, заданные общим правилом button */
+.bored-button {
+  border-radius: 4px;
+  padding: 10px 16px;
+  /* Отменяем capitalize из общего правила button: он ломает регистр русских фраз */
+  text-transform: none;
+}
+
+/* Неактивная кнопка во время загрузки */
+.bored-button:disabled {
+  cursor: default;
+  opacity: 0.6;
+}
+
+/* Класс strike применяется к зачёркнутому тексту */
+.strike {
+  /* Добавляется зачёркивание текста */
+  text-decoration: line-through;
 }

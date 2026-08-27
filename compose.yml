@@ -1,0 +1,29 @@
+services:
+  # Режим разработки: горячая перезагрузка, исходники монтируются с хоста
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    ports:
+      - "3000:3000"
+    volumes:
+      # Монтируем исходники, чтобы правки на хосте сразу попадали в контейнер
+      - .:/app
+      # Анонимный том прячет node_modules хоста: внутри используются
+      # зависимости, установленные под Linux на стадии сборки образа
+      - /app/node_modules
+    environment:
+      NODE_ENV: development
+    stdin_open: true
+    tty: true
+    command: npm start
+
+  # Рабочая версия: собранная статика раздаётся через Nginx
+  prod:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "80:80"
+    profiles:
+      - prod
