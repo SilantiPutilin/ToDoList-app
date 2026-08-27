@@ -1,16 +1,23 @@
-# React + Vite
+### Дополнительное API: Bored API
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Для получения случайных идей для досуга используется Bored API (зеркало от App Brewery).  
+Эндпоинт: `https://bored-api.appbrewery.com/api/activity`  
+Метод: GET  
+Ответ в формате JSON. API не требует аутентификации и имеет ограничение 100 запросов в 15 минут[reference:3].
 
-Currently, two official plugins are available:
+Поля ответа:
+- `activity` – описание занятия (строка, на английском)
+- `type` – категория (education, social, relaxation, diy, charity, cooking, relaxation, music, busywork)[reference:4]
+- `participants` – количество участников (число)
+- `price` – стоимость (0 – бесплатно, 1 – дорого)
+- `accessibility` – доступность (0 – очень доступно, 1 – очень недоступно)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
-
-## React Compiler
-
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+Пример ответа:
+```json
+{
+  "activity": "Learn a new programming language",
+  "type": "education",
+  "participants": 1,
+  "price": 0.0,
+  "accessibility": 0.1
+}
