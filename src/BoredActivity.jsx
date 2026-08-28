@@ -7,7 +7,7 @@ import axios from 'axios';
 // прямой кросс-доменный запрос (CORS). Путь /api/bored обслуживают:
 // - Vite в режиме разработки (секция server.proxy в vite.config.js);
 // - Nginx внутри контейнера (секция location /api/bored/ в nginx.conf).
-const BORED_API_URL = '/api/bored/random';
+const BORED_API_URL = 'https://apis.scrimba.com/bored/api/activity';
 
 // Перевод категорий занятия на русский
 const TYPE_LABELS = {
